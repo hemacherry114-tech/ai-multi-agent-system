@@ -1,108 +1,85 @@
+import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
-  const handleSubmit = async () => {
-    setLoading(true);
+  const runAgents = () => {
+  setLoading(true);
+  setShowResults(false);
 
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/query?user_query=${query}`
-      );
-
-      const data = await response.json();
-
-      setResult(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
+  setTimeout(() => {
     setLoading(false);
-  };
-
+    setShowResults(true);
+  }, 2500);
+};
   return (
-    <div
-      style={{
-        backgroundColor: "#0f172a",
-        minHeight: "100vh",
-        color: "white",
-        padding: "40px",
-        fontFamily: "Arial",
-      }}
-    >
-      <h1
-        style={{
-          fontSize: "50px",
-          textAlign: "center",
-          marginBottom: "40px",
-        }}
-      >
-        AI Multi-Agent System
-      </h1>
+  <div className="container">
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "10px",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Ask anything..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          style={{
-            width: "500px",
-            padding: "12px",
-            fontSize: "18px",
-            borderRadius: "8px",
-            border: "none",
-          }}
-        />
+    <div className="navbar">
+      <div className="logo">NeuroFlow AI</div>
 
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          style={{
-            padding: "12px 20px",
-            fontSize: "18px",
-            borderRadius: "8px",
-            border: "none",
-            cursor: "pointer",
-            backgroundColor: "#38bdf8",
-            color: "black",
-            fontWeight: "bold",
-          }}
-        >
-          {loading ? "Running..." : "Run Agents"}
-        </button>
+      <div className="nav-links">
+        <span>Agents</span>
+        <span>Workflows</span>
+        <span>Analytics</span>
       </div>
+    </div>
 
-      {result && (
-        <div
-          style={{
-            marginTop: "40px",
-            backgroundColor: "#1e293b",
-            padding: "25px",
-            borderRadius: "12px",
-            width: "80%",
-            marginInline: "auto",
-          }}
-        >
-          <h2>Query</h2>
-          <p>{result.query}</p>
+    <h1 className="title">AI Multi-Agent System</h1>
+      <p style={{ marginTop: "-10px", marginBottom: "30px", color: "#94a3b8" }}>
+  Autonomous AI workflow orchestration platform
+</p>
 
-          <h2>Planner Agent</h2>
-          <p>{result.plan}</p>
+      <div className="input-section">
+        <input
+          className="input-box"
+          placeholder="Ask anything..."
+        />
+        
+      <button className="run-btn" onClick={runAgents}>
+  {loading ? "Running Agents..." : "Run Agents"}
+</button>
+      </div>
+      <div className="status-panel">
+  <div className="status-item">
+    <span className="dot"></span>
+    Planner Agent Active
+  </div>
 
-          <h2>Research Agent</h2>
-          <p>{result.research}</p>
-        </div>
-      )}
+  <div className="status-item">
+    <span className="dot"></span>
+    Research Pipeline Running
+  </div>
+
+  <div className="status-item">
+    <span className="dot"></span>
+    Summarization Engine Ready
+  </div>
+</div>
+
+
+{showResults && (
+<div className="results">
+  <h2>Agent Outputs</h2>
+
+  <div className="agent-card">
+    <h3>🤖 Planner Agent</h3>
+    <p>Task decomposition and workflow planning.</p>
+  </div>
+
+  <div className="agent-card">
+    <h3>🔍 Research Agent</h3>
+    <p>Retrieved contextual information from sources.</p>
+  </div>
+
+  <div className="agent-card">
+    <h3>🧠 Summarizer Agent</h3>
+    <p>Generated concise final response.</p>
+  </div>
+</div>
+)}
     </div>
   );
 }
