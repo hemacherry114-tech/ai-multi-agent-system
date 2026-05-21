@@ -102,7 +102,7 @@ function App() {
             cursor: "pointer",
             background:
            "linear-gradient(to right, #7c3aed, #d946ef)",
-            color: "black",
+            color: "white",
             fontWeight: "bold",
             boxShadow: "0 0 30px rgba(168,85,247,0.4)",
             transition: "0.3s",
